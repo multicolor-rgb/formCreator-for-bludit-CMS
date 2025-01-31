@@ -3,5 +3,9 @@
     {
         "name": "✉️ formCreator",
         "description": "Create own form!"
-    }
+    },
+       "captcha": "Please complete the CAPTCHA verification.",
+    "success": "The message has been sent.",
+    "error": "An error occurred while sending the message.",
+    "sendmsg":"Send Message"
 }

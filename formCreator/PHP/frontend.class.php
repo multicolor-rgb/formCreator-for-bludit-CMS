@@ -4,6 +4,8 @@ class frontendFormCreator
 {
      function show($val)
     {
+        global $L;
+
          function hex_encode($input)
         {
             return bin2hex($input);
@@ -92,13 +94,16 @@ class frontendFormCreator
 
          echo '
             <div class="g-recaptcha" data-sitekey="' . htmlspecialchars(@$sitekey) . '"></div>
-            <input type="submit" style="margin-top:10px;" name="submit" value="Send Message">
+            <input type="submit" style="margin-top:10px;" name="submit" value="'.$L->get('sendmsg').'">
         ';
         echo '</form>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>';
 
         // Handle form submission
         if (isset($_POST['submit'])) {
+
+        
+
             $secretKey = @$secretkey;
             $responseKey = $_POST['g-recaptcha-response'];
             $userIP = $_SERVER['REMOTE_ADDR'];
@@ -108,7 +113,7 @@ class frontendFormCreator
             $responseKeys = json_decode($response, true);
 
              if (intval($responseKeys["success"]) !== 1) {
-                echo "<span style='color:red;'>Please complete the CAPTCHA verification.</span>";
+                echo "<span style='color:red;'>".$L->get('captcha')."</span>";
             } else {
                 $subject = "Message from website!";
                 $headers = "MIME-Version: 1.0" . "\r\n";
@@ -167,9 +172,9 @@ class frontendFormCreator
 
                 // Send the email
                 if (mail($to, $subject, $message, $headers)) {
-                    echo "<span style='color:green;'>The message has been sent.</span>";
+                    echo "<span style='color:green;'> ".$L->get('success')."</span>";
                 } else {
-                    echo "<span style='color:red;'>An error occurred while sending the message.</span>";
+                    echo "<span style='color:red;'>".$L->get('error')."</span>";
                  }
             }
         }
